@@ -1,0 +1,90 @@
+:root {
+    --bg-color: #1e1e2e;
+    --card-bg: #181825;
+    --text-color: #cdd6f4;
+    --accent-blue: #89b4fa;
+    --accent-red: #f38ba8;
+    --accent-green: #a6e3a1;
+    --input-bg: #313244;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Estilo Reservas */
+header {
+    background-color: #11111b;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-blue);
+}
+
+.logo-texto {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--accent-blue);
+}
+
+.btn-header {
+    background: transparent;
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
+    padding: 5px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Caja Central */
+.caja-central {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    border: 1px solid #45475a;
+}
+
+/* Botones del Menú */
+.btn-menu {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #1e1e2e;
+    transition: transform 0.2s;
+}
+
+.btn-menu:hover {
+    transform: scale(1.02);
+}
+
+.btn-azul-etq { background-color: var(--accent-blue); }
+.btn-destacado { background-color: var(--accent-red); }
+
+/* Footer */
+footer {
+    background-color: #11111b;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: #6c7086;
+}
+
+.footer-logo { height: 30px; margin-bottom: 10px; }

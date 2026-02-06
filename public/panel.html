@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript">document.oncontextmenu = function(){return false;}</script>
+    <title>Panel de Control - Etiquetas</title>
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        /* Ajuste para que el diseño se vea bien en el sistema de etiquetas */
+        .btn-destacado { background-color: #f38ba8 !important; }
+        .btn-menu { display: block; text-decoration: none; padding: 15px; margin: 10px 0; border-radius: 8px; color: white; font-weight: bold; text-align: center; }
+        .btn-azul-etq { background-color: #89b4fa; }
+    </style>
+</head>
+<body> 
+    <header>    
+        <div class="logo-texto">🏷️ Área de Impresión</div>
+        <a href="#" id="btnSalir" class="btn-header">🚪 SALIR</a>
+    </header>
+
+    <div id="panel-box" class="caja-central">
+        <h1>Panel de Control</h1>
+        <p style="color: #444; margin-bottom: 30px; font-weight: 500;">Seleccione una operación para continuar:</p>
+
+        <div class="contenedor-menu" id="contenedor-botones">
+            <a href="etiquetas.html" class="btn-menu btn-azul-etq">🏷️ Imprimir Etiquetas</a>
+            
+            <a href="actualizar.html" class="btn-menu btn-destacado" id="btnActualizar">📈 Actualizar Precios DB</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#" onclick="abrirSoporte()">Soporte</a>
+        </div>
+        <img src="./img/Ob_Logo.png" alt="One Box Logo" class="footer-logo">
+        <p>&copy; 2026 Sistema de Etiquetas One Box. Todos los derechos reservados.</p>
+        <div class="footer-version">v1.0.0</div> 
+    </footer>
+
+    <script>
+        // --- SEGURIDAD Y SESIÓN ---
+        // Recuperamos los datos que guardamos en el login (index.html)
+        const sesion = JSON.parse(localStorage.getItem('usuario_etiquetas'));
+
+        if (!sesion) {
+            window.location.href = 'index.html';
+        }
+
+        const { nombre, sucursal, rol } = sesion;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnActualizar = document.getElementById('btnActualizar');
+            
+            // LÓGICA DE VISIBILIDAD PARA ADMIN
+            // Si el rol no es admin, borramos el botón de actualizar precios
+            if (rol !== 'admin' && btnActualizar) {
+                btnActualizar.remove(); 
+            }
+            
+            if (sucursal) {
+                document.querySelector('h1').innerHTML = `Hola, <span style="color:#4a90e2">${sucursal}</span>`;
+            }
+        });
+
+        // Botón Salir
+        document.getElementById('btnSalir').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('usuario_etiquetas');
+            window.location.href = 'index.html';
+        });
+
+        // --- GESTIÓN DE SOPORTE ---
+        function abrirSoporte() {
+            alert("Soporte: erco.efc@gmail.com");
+            // Aquí puedes integrar tu modal de soporte igual al de reservas
+        }
+    </script>
+</body>
+</html>

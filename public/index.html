@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Sistema de Etiquetas</title>
+    <style>
+        /* Estilos base del sistema de reservas */
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #181825;
+            --text-color: #cdd6f4;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --input-bg: #313244;
+            --border-color: #45475a;
+        }
+
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            color: var(--text-color);
+        }
+
+        .login-card { 
+            background: var(--card-bg); 
+            padding: 2.5rem; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            width: 100%;
+            max-width: 350px; 
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 { color: var(--accent-blue); margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            color: white;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--accent-blue); }
+
+        button { 
+            width: 100%; 
+            padding: 12px; 
+            background-color: var(--accent-green); 
+            color: #1e1e2e; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-top: 10px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        button:hover { 
+            background-color: #94d38d; 
+            transform: scale(1.02);
+        }
+
+        .footer-login { margin-top: 20px; font-size: 0.75rem; color: #6c7086; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="./img/Ob_Logo.png" alt="Logo" style="width: 50px; margin-bottom: 10px;">
+        <h2>Ingreso One Box</h2>
+        <input type="text" id="user" placeholder="Usuario" autocomplete="username">
+        <input type="password" id="pass" placeholder="Contraseña" autocomplete="current-password">
+        <button onclick="ingresar()">INGRESAR AL SISTEMA</button>
+        <div class="footer-login">v1.0.0 - Área de Impresión</div>
+    </div>
+
+    <script>
+        // CONFIGURACIÓN: URL de tu servidor en Render
+        const SERVIDOR_URL = "https://etiquetas.onebox.net.ar";
+
+        async function ingresar() {
+            const usuario = document.getElementById('user').value;
+            const password = document.getElementById('pass').value;
+
+            if (!usuario || !password) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            try {
+                // Conectamos al servidor en la nube
+                const resp = await fetch(`${SERVIDOR_URL}/api/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, password })
+                });
+
+                const data = await resp.json();
+                if (data.success) {
+                    // Guardamos la sesión (nombre, rol y sucursal de TiDB)
+                    localStorage.setItem('usuario_etiquetas', JSON.stringify(data));
+                    // Redirigimos al Panel de Control
+                    window.location.href = 'panel.html'; 
+                } else {
+                    alert("Usuario o clave incorrectos. Verifica tus datos de Reservas.");
+                }
+            } catch (err) {
+                console.error("Error de conexión:", err);
+                alert("Error: No se pudo conectar con el servidor central.");
+            }
+        }
+
+        // Permitir entrar con la tecla Enter
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') ingresar();
+        });
+    </script>
+</body>
+</html>

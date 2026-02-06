@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impresión Zebra - One Box</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #181825;
+            --text-color: #cdd6f4;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --border-color: #45475a;
+        }
+
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Segoe UI', sans-serif; }
+        
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-color); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .card-header { background-color: #11111b !important; color: var(--accent-blue); border-bottom: 1px solid var(--border-color); }
+        
+        .user-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #6c7086; margin-bottom: 10px; }
+        
+        #btnLogout { color: #f38ba8; text-decoration: none; cursor: pointer; font-weight: bold; }
+        #btnLogout:hover { text-decoration: underline; }
+
+        .form-control, .form-select { 
+            background-color: #313244; 
+            border: 1px solid var(--border-color); 
+            color: white; 
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #313244;
+            color: white;
+            border-color: var(--accent-blue);
+            box-shadow: none;
+        }
+        .form-label { color: #bac2de; font-size: 0.85rem; margin-bottom: 2px; }
+
+        .btn-imprimir {
+            background-color: var(--accent-green);
+            color: #1e1e2e;
+            font-weight: bold;
+            border: none;
+            transition: transform 0.2s;
+        }
+        .btn-imprimir:hover {
+            background-color: #94d38d;
+            transform: scale(1.02);
+            color: #1e1e2e;
+        }
+
+        .btn-volver {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        /* Invertir color del icono para que sea blanco */
+        .icon-white { filter: invert(88%) sepia(21%) saturate(935%) hue-rotate(187deg) brightness(101%) contrast(92%); }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-center mb-3">
+        <a href="panel.html" class="btn-volver">← Volver al Panel de Control</a>
+    </div>
+
+    <div class="card mx-auto" style="max-width: 420px;">
+        <div class="card-header pt-3">
+            <div class="user-info">
+                <span id="txtUserLogueado">Usuario: Cargando...</span>
+                <a id="btnLogout" onclick="cerrarSesion()">Cerrar Sesión</a>
+            </div>
+            <h5 class="mb-0">
+                <img src="https://img.icons8.com/ios-filled/25/ffffff/barcode.png" class="icon-white" alt="barcode"/> 
+                Imprimir Etiquetas
+            </h5>
+        </div>
+        <div class="card-body">
+            
+            <label class="form-label">Impresora detectada:</label>
+            <select id="selImpresora" class="form-select form-select-sm mb-3"></select>
+
+            <label class="form-label">Lista de precios:</label>
+            <select id="selLista" class="form-select form-select-sm mb-3">
+                <option value="1">LP01 Lista General</option>
+                <option value="2">LP02 Lista Mayorista</option>
+            </select>
+
+            <label class="form-label">Código del Artículo (Enter):</label>
+            <input type="text" id="txtCodigo" class="form-control form-control-sm mb-3" placeholder="Ej: 102030" autofocus>
+
+            <label class="form-label">Descripción del Producto:</label>
+            <textarea id="txtDetalle" class="form-control form-control-sm mb-3" rows="2" readonly placeholder="Aquí aparecerá el nombre del producto..."></textarea>
+
+            <div class="row g-2">
+                <div class="col-7">
+                    <label class="form-label">Formato:</label>
+                    <select id="selFormato" class="form-select form-select-sm">
+                        <option value="simple">Etiqueta Simple (Grande)</option>
+                        <option value="x3">3 Etiquetas por fila (Chicas)</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Cantidad:</label>
+                    <input type="number" id="numCopias" class="form-control form-control-sm" value="1" min="1">
+                </div>
+            </div>
+
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" id="chkSinPrecio">
+                <label class="form-check-label small" for="chkSinPrecio">Imprimir sin el precio unitario</label>
+            </div>
+
+            <button id="btnImprimir" class="btn btn-imprimir w-100 mt-4 py-2 shadow-sm">🚀 ENVIAR A ZEBRA</button>
+        </div>
+    </div>
+</div>
+
+<script src="BrowserPrint-Zebra-1.0.2.3.min.js"></script>
+<script>
+    // 1. Verificación de Seguridad
+    const sesionData = localStorage.getItem('usuario_etiquetas');
+    if (!sesionData) {
+        window.location.href = 'index.html'; 
+    } else {
+        const usuario = JSON.parse(sesionData);
+        document.getElementById('txtUserLogueado').innerText = `${usuario.nombre} | ${usuario.sucursal}`;
+    }
+
+    // 2. Función para Cerrar Sesión
+    function cerrarSesion() {
+        localStorage.removeItem('usuario_etiquetas');
+        window.location.href = 'index.html';
+    }
+</script>
+<script src="app.js"></script>
+</body>
+</html>
