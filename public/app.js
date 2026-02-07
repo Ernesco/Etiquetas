@@ -5,7 +5,7 @@
 
 let selected_device;
 // CONFIGURACIÓN: Cambia esta URL por la que te dé Render al desplegar el servidor
-const SERVIDOR_URL = "https://etiquetas.onebox.net.ar"; 
+const SERVIDOR_URL = "https://etiquetas-9vr0.onrender.com"; 
 
 // 1. INICIALIZAR IMPRESORA (BrowserPrint local)
 window.onload = function() {
