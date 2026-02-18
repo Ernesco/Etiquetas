@@ -70,26 +70,25 @@ document.getElementById('btnImprimir').onclick = function() {
 
     let epl = "";
 
-    if (formato === "x3") {
-        // --- FORMATO 3 ETIQUETAS (94mm x 20mm total) ---
-        // Máximo 14 caracteres para evitar que se pise con la etiqueta de al lado
-        const descCorta = p.descripcion.substring(0, 14).toUpperCase();
+if (formato === "x3") {
+        // Reducimos la descripción a 14 caracteres para que no se pase al otro cuadradito
+        const descCorta = p.descripcion.substring(0, 14);
         
+        // Coordenadas calculadas para 3 columnas (aprox 25-30mm cada una)
+        // Columna 1: X=10 | Columna 2: X=205 | Columna 3: X=400
         epl = `
 N
-q752
-Q160,24
-A15,5,0,2,1,1,N,"${descCorta}"
-B15,30,0,1,2,2,60,B,"${p.codigo}"
-A15,100,0,2,1,1,N,"${precioTxt}"
+A10,5,0,1,1,1,N,"${descCorta}"
+B10,25,0,1,2,2,40,N,"${p.codigo}"
+A10,75,0,2,1,1,N,"${precioTxt}"
 
-A265,5,0,2,1,1,N,"${descCorta}"
-B265,30,0,1,2,2,60,B,"${p.codigo}"
-A265,100,0,2,1,1,N,"${precioTxt}"
+A205,5,0,1,1,1,N,"${descCorta}"
+B205,25,0,1,2,2,40,N,"${p.codigo}"
+A205,75,0,2,1,1,N,"${precioTxt}"
 
-A515,5,0,2,1,1,N,"${descCorta}"
-B515,30,0,1,2,2,60,B,"${p.codigo}"
-A515,100,0,2,1,1,N,"${precioTxt}"
+A400,5,0,1,1,1,N,"${descCorta}"
+B400,25,0,1,2,2,40,N,"${p.codigo}"
+A400,75,0,2,1,1,N,"${precioTxt}"
 P${copias}
 `;
     } else {
