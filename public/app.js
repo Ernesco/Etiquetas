@@ -71,30 +71,30 @@ document.getElementById('btnImprimir').onclick = function() {
     let epl = "";
 
 if (formato === "x3") {
-        // Acortamos la descripción para que no se pise con la columna de al lado
-        const descCorta = p.descripcion.substring(0, 16);
+        // Acortamos un poco más la descripción para evitar que pise la otra etiqueta al ser más grande
+        const descCorta = p.descripcion.substring(0, 15);
         
-        // Coordenadas X para cada una de las 3 etiquetas del rollo
-        const col1 = 10;
-        const col2 = 210;
-        const col3 = 410;
+        // Corregimos las coordenadas X para centrar más (sumamos 25-30 puntos a cada columna)
+        const col1 = 35; 
+        const col2 = 235;
+        const col3 = 435;
 
         epl = `
 N
-A${col1},5,0,1,1,1,N,"${p.codigo}"
-B${col1},20,0,1,2,2,35,N,"${p.codigo}"
-A${col1},60,0,1,1,1,N,"${descCorta}"
-A${col1},80,0,2,1,1,N,"${precioTxt}"
+A${col1},5,0,2,1,1,N,"${p.codigo}"
+B${col1},22,0,1,2,2,40,N,"${p.codigo}"
+A${col1},70,0,2,1,1,N,"${descCorta}"
+A${col1},90,0,2,1,1,N,"${precioTxt}"
 
-A${col2},5,0,1,1,1,N,"${p.codigo}"
-B${col2},20,0,1,2,2,35,N,"${p.codigo}"
-A${col2},60,0,1,1,1,N,"${descCorta}"
-A${col2},80,0,2,1,1,N,"${precioTxt}"
+A${col2},5,0,2,1,1,N,"${p.codigo}"
+B${col2},22,0,1,2,2,40,N,"${p.codigo}"
+A${col2},70,0,2,1,1,N,"${descCorta}"
+A${col2},90,0,2,1,1,N,"${precioTxt}"
 
-A${col3},5,0,1,1,1,N,"${p.codigo}"
-B${col3},20,0,1,2,2,35,N,"${p.codigo}"
-A${col3},60,0,1,1,1,N,"${descCorta}"
-A${col3},80,0,2,1,1,N,"${precioTxt}"
+A${col3},5,0,2,1,1,N,"${p.codigo}"
+B${col3},22,0,1,2,2,40,N,"${p.codigo}"
+A${col3},70,0,2,1,1,N,"${descCorta}"
+A${col3},90,0,2,1,1,N,"${precioTxt}"
 P${copias}
 `;
     } else {
