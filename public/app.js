@@ -70,26 +70,31 @@ document.getElementById('btnImprimir').onclick = function() {
 
     let epl = "";
 
-    if (formato === "x3") {
-        // --- FORMATO 3 ETIQUETAS (94mm x 20mm total) ---
-        // Máximo 14 caracteres para evitar que se pise con la etiqueta de al lado
-        const descCorta = p.descripcion.substring(0, 14).toUpperCase();
+if (formato === "x3") {
+        // Acortamos la descripción para que no se pise con la columna de al lado
+        const descCorta = p.descripcion.substring(0, 16);
         
+        // Coordenadas X para cada una de las 3 etiquetas del rollo
+        const col1 = 10;
+        const col2 = 210;
+        const col3 = 410;
+
         epl = `
 N
-q752
-Q160,24
-A15,5,0,2,1,1,N,"${descCorta}"
-B15,30,0,1,2,2,60,B,"${p.codigo}"
-A15,100,0,2,1,1,N,"${precioTxt}"
+A${col1},5,0,1,1,1,N,"${p.codigo}"
+B${col1},20,0,1,2,2,35,N,"${p.codigo}"
+A${col1},60,0,1,1,1,N,"${descCorta}"
+A${col1},80,0,2,1,1,N,"${precioTxt}"
 
-A265,5,0,2,1,1,N,"${descCorta}"
-B265,30,0,1,2,2,60,B,"${p.codigo}"
-A265,100,0,2,1,1,N,"${precioTxt}"
+A${col2},5,0,1,1,1,N,"${p.codigo}"
+B${col2},20,0,1,2,2,35,N,"${p.codigo}"
+A${col2},60,0,1,1,1,N,"${descCorta}"
+A${col2},80,0,2,1,1,N,"${precioTxt}"
 
-A515,5,0,2,1,1,N,"${descCorta}"
-B515,30,0,1,2,2,60,B,"${p.codigo}"
-A515,100,0,2,1,1,N,"${precioTxt}"
+A${col3},5,0,1,1,1,N,"${p.codigo}"
+B${col3},20,0,1,2,2,35,N,"${p.codigo}"
+A${col3},60,0,1,1,1,N,"${descCorta}"
+A${col3},80,0,2,1,1,N,"${precioTxt}"
 P${copias}
 `;
     } else {
